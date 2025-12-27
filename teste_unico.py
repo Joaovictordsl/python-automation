@@ -6,7 +6,7 @@ import time
 
 # --- CONFIGURAÇÃO ÚNICA ---
 BASE_URL = "http://local.adspower.net:50325"
-USER_ID = "k185lvi8" 
+USER_ID = "k18bcpex" 
 
 def testar_perfil_unico():
     print(f"A tentar abrir o perfil {USER_ID}...")

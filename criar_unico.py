@@ -10,7 +10,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 # --- CONFIGURAÇÃO ---
 BASE_URL = "http://127.0.0.1:50325"
-USER_ID = "k188brvh" 
+USER_ID = "k18bcpex" 
 
 def gerar_dados():
     nomes = ["joao", "maria", "pedro", "ana", "carlos", "lucas", "julia", "marcos", "fernanda", "ricardo"]
