@@ -2,6 +2,7 @@ import requests
 import random
 import string
 import time
+import sys 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -10,12 +11,19 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 # --- CONFIGURAÇÃO ---
 BASE_URL = "http://127.0.0.1:50325"
-USER_ID = "k18bcpw0" 
+
+
+if len(sys.argv) > 1:
+    USER_ID = sys.argv[1]
+else:
+    print("Erro: Você precisa passar o User ID! Exemplo: python script.py k188brvh")
+    sys.exit(1)
+
 
 def gerar_dados():
     nomes = ["joao", "maria", "pedro", "ana", "carlos", "lucas", "julia", "marcos", "fernanda", "ricardo"]
     sobrenomes = ["lima", "silva", "santos", "oliveira", "souza", "pereira", "costa", "ribeiro"]
-    email_base = f"{random.choice(nomes)}{random.choice(sobrenomes)}{random.randint(100,999)}"
+    email_base = f"{random.choice(nomes)}{random.choice(sobrenomes)}{random.randint(1000,9999)}"
     email_completo = f"{email_base}@outlook.com"
     senha = "".join(random.choices(string.ascii_letters + string.digits, k=10)) + "A1!"
     return email_completo, senha
@@ -32,11 +40,11 @@ def executar():
         
         driver.execute_script("window.open('https://signup.live.com/signup.aspx?lic=1', '_blank');")
         
-        while len(driver.window_handles) < 3:
+        while len(driver.window_handles) < 2:
             time.sleep(0.5)
         
-        driver.switch_to.window(driver.window_handles[2])
-        print("Foco na aba 3. Aguardando carregamento...")
+        driver.switch_to.window(driver.window_handles[1])
+        print("Foco na aba 2. Aguardando carregamento...")
         time.sleep(8) 
         
         email, senha = gerar_dados()
@@ -77,9 +85,8 @@ def executar():
         with open("contas_outlook.txt", "a") as f:
             f.write(f"Email: {email} | Senha: {senha} | Perfil: {USER_ID}\n")
 
-        requests.get(f"{BASE_URL}/api/v1/browser/stop?user_id={USER_ID}")
-        print("Perfil fechado.")
-
+        # requests.get(f"{BASE_URL}/api/v1/browser/stop?user_id={USER_ID}")
+        # print("Perfil fechado.")
     except Exception as e:
         print(f"Ocorreu um erro: {e}")
 

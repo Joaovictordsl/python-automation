@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+import sys
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -9,7 +10,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 # --- CONFIGURAÇÃO ---
 BASE_URL = "http://127.0.0.1:50325"
-USER_ID = "k18bcpw0" 
+
+if len(sys.argv) > 1:
+    USER_ID = sys.argv[1]
+else:
+    print("Erro: Você precisa passar o User ID! Exemplo: python script.py k188brvh")
+    sys.exit(1)
 
 def obter_ultimos_dados_outlook():
     """Lê o arquivo de texto e retorna o último e-mail e senha salvos."""
