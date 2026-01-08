@@ -16,6 +16,7 @@ if len(sys.argv) >= 4:
     SENHA_CONTA = sys.argv[3]
     print(f"\n🚀 Iniciando Perfil: {USER_ID}")
     print(f"📧 Conta injetada: {EMAIL_CONTA}")
+    print(f"📧 Conta injetada: {SENHA_CONTA}")
 else:
     print("❌ Erro: Faltam argumentos! Use: python shopify_auto.py ID EMAIL SENHA")
     sys.exit(1)
@@ -63,7 +64,6 @@ def executar_shopify_vinculado():
 
         # --- ETAPA: SELEÇÃO DO MÉTODO DE E-MAIL ---
         print(f"[{USER_ID}] Navegando até botão de e-mail...")
-        time.sleep(6)
         
         # Tentativa de clique direto via XPath para ser mais seguro que TAB
         # try:
@@ -76,25 +76,30 @@ def executar_shopify_vinculado():
         #         time.sleep(0.8)
         #     actions.send_keys(Keys.ENTER).perform()
         actions.send_keys(Keys.TAB).perform()
+        actions.send_keys(Keys.TAB).perform()
 
         # --- ETAPA: PREENCHER EMAIL ---
         time.sleep(5)
         print(f"[{USER_ID}] Digitando Email...")
         
         # Garante foco e limpa campo
-        actions.click().perform()
+        # actions.click().perform()
         time.sleep(1)
         # Seleciona tudo e apaga antes de digitar
-        cmd_ctrl = Keys.COMMAND if sys.platform == 'darwin' else Keys.CONTROL
-        actions.key_down(cmd_ctrl).send_keys('a').key_up(cmd_ctrl).send_keys(Keys.BACKSPACE).perform()
+        # cmd_ctrl = Keys.COMMAND if sys.platform == 'darwin' else Keys.CONTROL
+        # actions.key_down(cmd_ctrl).send_keys('a').key_up(cmd_ctrl).send_keys(Keys.BACKSPACE).perform()
         
         # Digita o e-mail real recebido do Bash
         actions.send_keys(EMAIL_CONTA).send_keys(Keys.ENTER).perform()
-        
+
         # --- ETAPA: PREENCHER SENHA ---
-        time.sleep(5)
+        
+        time.sleep(1)
+
+
         print(f"[{USER_ID}] Digitando Senha...")
-        actions.send_keys(SENHA_CONTA).send_keys(Keys.ENTER).perform()
+        actions.send_keys(SENHA_CONTA).perform()
+        actions.send_keys(Keys.ENTER).perform()
 
         print(f"\n✅ [{USER_ID}] SUCESSO: {EMAIL_CONTA}")
 
