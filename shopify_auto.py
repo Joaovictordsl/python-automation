@@ -99,6 +99,7 @@ def executar_shopify_vinculado():
 
         print(f"[{USER_ID}] Digitando Senha...")
         actions.send_keys(SENHA_CONTA).perform()
+        time.sleep(3)
         actions.send_keys(Keys.ENTER).perform()
 
         print(f"\n✅ [{USER_ID}] SUCESSO: {EMAIL_CONTA}")
@@ -114,3 +115,4 @@ def executar_shopify_vinculado():
 
 if __name__ == "__main__":
     executar_shopify_vinculado()
+

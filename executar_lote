@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Verifica se o usuário passou a quantidade, senão assume 1
+QTD=${1:-1}
+
+echo "🤖 Iniciando processamento de $QTD perfis..."
+
+# 1. Captura os IDs em uma variável e converte para lista
+ids_list=$(python3 user_ids.py | head -n "$QTD")
+
+# 2. Captura os emails e senhas (mantendo sua lógica de tail -r e awk)
+contas_list=$(tail -n "$QTD" contas_outlook.txt | tail -r | awk -F' \\| ' '{gsub(/Email: /,"",$1); gsub(/Senha: /,"",$2); print $1"|"$2}')
+
+# Converte as listas em arrays compatíveis com ZSH e BASH
+# Usamos o 'tr' para garantir que a quebra de linha seja tratada corretamente
+ids=($(echo "$ids_list" | tr '\n' ' '))
+contas=($(echo "$contas_list" | tr '\n' ' '))
+
+# 3. Loop para execução usando um contador simples
+for ((i=0; i<$QTD; i++)); do
+    user_id="${ids[$i]}"
+    
+    # Extrai email e senha da string "email|senha"
+    conta_atual="${contas[$i]}"
+    email=$(echo "$conta_atual" | cut -d'|' -f1)
+    senha=$(echo "$conta_atual" | cut -d'|' -f2)
+
+    # Verifica se temos dados antes de rodar
+    if [ -z "$user_id" ] || [ -z "$email" ]; then
+        continue
+    fi
+
+    echo "------------------------------------------"
+    echo "🚀 [$((i+1))/$QTD] Lançando: $user_id | $email"
+    
+    # Executa em SEGUNDO PLANO
+    python3 shopify_auto.py "$user_id" "$email" "$senha" &
+
+    # Gerenciador de Paralelismo (roda de 2 em 2)
+    # Se o resto da divisão por 2 for 0, ele espera o par terminar
+    if [[ $(( (i+1) % 2 )) -eq 0 ]]; then
+        echo "⏳ Aguardando conclusão do bloco de 2 perfis..."
+        wait
+    fi
+done
+
+# Espera qualquer processo que sobrou (caso a QTD seja ímpar)
+wait
+echo "--- ✅ TODOS OS $QTD PERFIS FINALIZADOS ---"
