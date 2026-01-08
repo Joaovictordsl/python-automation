@@ -64,7 +64,12 @@ def executar_shopify_vinculado():
         options.add_experimental_option("debuggerAddress", res["data"]["ws"]["selenium"])
         service = Service(executable_path=res["data"]["webdriver"])
         driver = webdriver.Chrome(service=service, options=options)
-        
+                
+        driver.set_page_load_timeout(40)
+        driver.set_script_timeout(40)
+        driver.implicitly_wait(10) 
+        # ------------------------------------
+
         # 3. Ir para o Shopify
         print("Acessando Shopify...")
         driver.get("https://www.shopify.com/br/free-trial")
@@ -73,14 +78,19 @@ def executar_shopify_vinculado():
         actions = ActionChains(driver)
 
         # --- ETAPA: PERGUNTAS DE PESQUISA ---
-        print("Passando pelas pesquisas iniciais...")
-        for _ in range(3):
-            actions.send_keys(Keys.ENTER).perform()
-            time.sleep(2.5)
+        # print("Passando pelas pesquisas iniciais...")
+        # for _ in range(3):
+        #     actions.send_keys(Keys.ENTER).perform()
+        #     time.sleep(2.5)
+
 
         # Confirmação de Região (Brasil)
-        print("Confirmando País...")
-        actions.send_keys(Keys.ENTER).perform()
+        # print("Confirmando País...")
+        # actions.send_keys(Keys.ENTER).perform()
+
+        time.sleep(3)
+        driver.switch_to.default_content() # Isso limpa erros de contexto/frames
+        # --------------------------
         
         # --- ETAPA: SELEÇÃO DO MÉTODO DE E-MAIL ---
         print("Aguardando tela de métodos de cadastro...")
