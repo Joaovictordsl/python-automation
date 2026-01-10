@@ -108,7 +108,7 @@ def executar_fluxo_final():
         actions.send_keys("tiktok").perform()
         time.sleep(5)
         actions.send_keys(Keys.ENTER).perform()
-        time.sleep(1)
+        time.sleep(3)
         actions.send_keys(Keys.ENTER).perform()
 
         # # 3. Aguardar página do App e clicar no primeiro 'Instalar'
