@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+python3 tiktok_2.py "$1" 
+
