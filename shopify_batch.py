@@ -55,7 +55,8 @@ def carregar_contas_recentes(quantidade):
                     email = partes[0].replace("Email: ", "").strip()
                     senha = partes[1].replace("Senha: ", "").strip()
                     contas.append({"email": email, "senha": senha})
-        return contas
+        # Inverter para que as contas mais recentes fiquem primeiro (pareando com os perfis mais recentes)
+        return contas[::-1]
     except Exception as e:
         print(f"Erro ao ler contas: {e}")
         return contas
