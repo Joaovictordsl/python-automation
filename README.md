@@ -4,10 +4,13 @@
 
 
 
-#### Step 1. Email Sign up
+#### Step 1. Email Sign
 
-The very first thing this code does, runs on bash outlook_perfis.sh
+The very first thing this code does, runs on bash outlook_perfis.sh.
 
+It creates new accounts, using Selenium, to simulate human account creation.
+
+Then it sends and save into the database.
 
 
 #### Step 2. Shopify
