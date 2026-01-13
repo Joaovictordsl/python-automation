@@ -1,7 +1,10 @@
-## AUTOMATION WITH PYTHON 
+# Automation with Python 
 
-# Step 1. Criar_unico
+## Step 1. Email Sign up
 
-# Step 2. Shopify
+The very first thing this code does, runs on bash outlook_perfis.sh 
 
-# Step 3. tiktok
+
+## Step 2. Shopify
+
+## Step 3. tiktok
